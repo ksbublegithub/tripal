@@ -2,7 +2,7 @@ Adding BLAST Results
 ====================
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../install_tripal/drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../../prereqs/drupal_home`
 
 
 Adding BLAST Databases

@@ -1,5 +1,5 @@
-Drupal Installation
-===================
+Install Drupal
+==============
 
 Database Setup
 --------------
@@ -35,7 +35,7 @@ Software Installation
 
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`./drupal_home`
 
 
 Before we can install Drupal we must ensure that that we are allowed to add files into the root directory.  Select a user account that will be the owner of all web files and change the owner of the ``$DRUPAL_HOME`` directory to that user:
@@ -149,19 +149,19 @@ Web-based Steps
 
 Navigate to the installation page of our new web site http://localhost/install.php
 
-.. image:: install_drupal.install1.png
+.. image:: install_drupal/install_drupal.install1.png
 
 Ensure that Standard is selected and click **Save and Continue**. You will next be asked to select the language you want to use. Choose **English**:
 
-.. image:: install_drupal.install2.png
+.. image:: install_drupal/install_drupal.install2.png
 
 Next, you will see a progress bar as Drupal is installed.
 
-.. image:: install_drupal.install3.png
+.. image:: install_drupal/install_drupal.install3.png
 
 Once it completes, a configuration page with some final settings will be visible.
 
-.. image:: install_drupal.install4.png
+.. image:: install_drupal/install_drupal.install4.png
 
 Here you will provide details appropriate for your site, including your site name and administrative password.  If you are experimenting with Tripal the following values can be used:
 
@@ -179,4 +179,4 @@ Here you will provide details appropriate for your site, including your site nam
 
 Now, click the **Save and Continue** button. You will see a message about unable to send an email. This is safe to ignore for the tutorial, but for a production site you will need that your server can send emails to a service provider. Now, your site is enabled. Click the link Your new site:
 
-.. image:: install_drupal.install5.png
+.. image:: install_drupal/install_drupal.install5.png

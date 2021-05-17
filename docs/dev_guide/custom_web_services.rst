@@ -1,18 +1,17 @@
 Creating Custom Web Services
 ==============================
 
-
 Introduction
 -------------
 
-New in Tripal v3 are `RESTful web services <https://en.wikipedia.org/wiki/Representational_state_transfer>`_.  These web-services are designed to allow end-users to access data programmatically using any programming language of their choice.  Web services in Tripal v3 are provided by the **tripal_ws** module.  By default the module provides the "content" service.  This service provides access via a RESTful interface to all of the content published on a Tripal site.  It is meant to respond immediately as the site admin makes changes to published data and is expected to always provide access to the same data displayed on the site (nothing more and nothing less). 
+New in Tripal v3 are `RESTful web services <https://en.wikipedia.org/wiki/Representational_state_transfer>`_.  These web-services are designed to allow end-users to access data programmatically using any programming language of their choice.  Web services in Tripal v3 are provided by the **tripal_ws** module.  By default the module provides the "content" service.  This service provides access via a RESTful interface to all of the content published on a Tripal site.  It is meant to respond immediately as the site admin makes changes to published data and is expected to always provide access to the same data displayed on the site (nothing more and nothing less).
 
 
-Tripal v3 has been redesigned from Tripal v2 to be fully organized around controlled vocabularies.  All data made available via Tripal is expected to be described by the terms of a controlled vocabulary or ontology.  For example, all content types in Tripal are assigned a controlled vocabulary term that describes what the content is.  Additionally, each field of data attached to a content type also is described using a controlled vocabulary term.  If a field provides more than just a single data value (i.e. it provides a list or nested structured array of data of key/value pairs) then each of the keys for those pairs must also be a controlled vocabulary term.  This requirement allows Tripal to fully describe the data it houses to any other Tripal site and any other script or service that can read the web services.  As long as the client application understands the vocabulary term it will understand the meaning of the data.  Using controlled vocabulary terms to describe all data allows a Tripal site to participate in the `Semantic Web <https://en.wikipedia.org/wiki/Semantic_Web>`_. 
+Tripal v3 has been redesigned from Tripal v2 to be fully organized around controlled vocabularies.  All data made available via Tripal is expected to be described by the terms of a controlled vocabulary or ontology.  For example, all content types in Tripal are assigned a controlled vocabulary term that describes what the content is.  Additionally, each field of data attached to a content type also is described using a controlled vocabulary term.  If a field provides more than just a single data value (i.e. it provides a list or nested structured array of data of key/value pairs) then each of the keys for those pairs must also be a controlled vocabulary term.  This requirement allows Tripal to fully describe the data it houses to any other Tripal site and any other script or service that can read the web services.  As long as the client application understands the vocabulary term it will understand the meaning of the data.  Using controlled vocabulary terms to describe all data allows a Tripal site to participate in the `Semantic Web <https://en.wikipedia.org/wiki/Semantic_Web>`_.
 
-Finally, the Tripal RESTful services are meant to be discoverable.  In some cases, when a web services is designed, the only way to understand the structure of it and the operations that it provides are for a programmer to read online documentation for the service before she can write the client application.  However, to better support automatic data discovery without human intervention by a client the Tripal web services have been designed to be discoverable.  To this end, Tripal uses the  `Hydra Core Vocabulary <https://www.hydra-cg.com/spec/latest/core/>`_ specification.  It fully describes all of the services, their operations, and the resulting value.  A client application that understands the Hydra language can therefore learn  to use the web service without human intervention.  However, in practice, its a good idea to continue to provide online documentation for humans.  And this User's Guide :doc:`provides those instructions </user_guide/web_services>` for the default Tripal content service.  
+Finally, the Tripal RESTful services are meant to be discoverable.  In some cases, when a web services is designed, the only way to understand the structure of it and the operations that it provides are for a programmer to read online documentation for the service before she can write the client application.  However, to better support automatic data discovery without human intervention by a client the Tripal web services have been designed to be discoverable.  To this end, Tripal uses the  `Hydra Core Vocabulary <https://www.hydra-cg.com/spec/latest/core/>`_ specification.  It fully describes all of the services, their operations, and the resulting value.  A client application that understands the Hydra language can therefore learn  to use the web service without human intervention.  However, in practice, its a good idea to continue to provide online documentation for humans.  And this User's Guide :doc:`provides those instructions </user_guide/building/web_services>` for the default Tripal content service.
 
-This documentation provides instructions to construct your own custom web services and making that service available through Tripal's existing web service infrastructure.  This will enable your web service to be discoverable and to provide a consistent experience to end-users.  Before proceeding with the following instructions, please review the **Structure of a Web Service Response** section on the User's Guide :doc:`Web Services page </user_guide/web_services>`.
+This documentation provides instructions to construct your own custom web services and making that service available through Tripal's existing web service infrastructure.  This will enable your web service to be discoverable and to provide a consistent experience to end-users.  Before proceeding with the following instructions, please review the **Structure of a Web Service Response** section on the User's Guide :doc:`Web Services page </user_guide/building/web_services>`.
 
 Getting Started
 ----------------
@@ -30,12 +29,12 @@ When you are ready to begin construction of your web service, you must first cre
 
 	[module_name]/includes/TripalWebService
 
-Where [module_name] is the name of your custom module.  It is inside of this directory that you will place the code for your new web services.  Tripal is designed to recognize this directory, discover the web services described inside of it and to automatically make them available!  You need only program the service and Tripal does the rest.  
+Where [module_name] is the name of your custom module.  It is inside of this directory that you will place the code for your new web services.  Tripal is designed to recognize this directory, discover the web services described inside of it and to automatically make them available!  You need only program the service and Tripal does the rest.
 
 
-**Note:** When selecting a version number it is best practice to start with 0.1.  The first number represents the  "major" number and the second number is the "minor" number.  When minor bug fixes or changes to the service occur the minor number should be incremented. When major changes occur that affect the structure of the web service or it's operations then the major number should be incremented.    The service can be named whatever you like.   This class file should be named according to this schema with a **.inc** extension. 
+**Note:** When selecting a version number it is best practice to start with 0.1.  The first number represents the  "major" number and the second number is the "minor" number.  When minor bug fixes or changes to the service occur the minor number should be incremented. When major changes occur that affect the structure of the web service or it's operations then the major number should be incremented.    The service can be named whatever you like.   This class file should be named according to this schema with a **.inc** extension.
 
-For this tutorial, suppose we wanted to create a web service that allowed someone to interact with the Tripal Job queue.  We could name our new class the **TripalJobService_v0.1** class and we would create this class in the file: 
+For this tutorial, suppose we wanted to create a web service that allowed someone to interact with the Tripal Job queue.  We could name our new class the **TripalJobService_v0.1** class and we would create this class in the file:
 
 .. code-block:: bash
 
@@ -46,7 +45,7 @@ Within this file we will implement our class with the following structure:
 
 .. code-block:: php
 
-	
+
 	class TripalJobService_v0_1 extends TripalWebService {
 
 	  /**
@@ -139,14 +138,14 @@ Notice currently all this function does is call the parent getDocumentation func
 	  ]
 	}
 
-In the above array, notice the @id is URL that represents a unique identifier for the class.   The @type will always be 'hydra:Class' because we are documenting a resource.  Then there is information about the class defined using the 'hydra:title' and 'hydra:description'.  The 'subclassOf' is always set to 'hydra:Resource'.  Next is the list of supported operations for this resource.  Remember, in our design we only want to support the GET operation for our Jobs service, so just like in the example above, the method we will support is GET.  The key/value pairs for the GET method are described using Hydra terms.  
+In the above array, notice the @id is URL that represents a unique identifier for the class.   The @type will always be 'hydra:Class' because we are documenting a resource.  Then there is information about the class defined using the 'hydra:title' and 'hydra:description'.  The 'subclassOf' is always set to 'hydra:Resource'.  Next is the list of supported operations for this resource.  Remember, in our design we only want to support the GET operation for our Jobs service, so just like in the example above, the method we will support is GET.  The key/value pairs for the GET method are described using Hydra terms.
 
 For our services we need to provide the information to Tripal so that it can generate these Hydra JSON arrays that document our service.  Tripal provides some easy API functions to help with this.  The first is the **addDoc** member function.  This function will take as input the class details, operations and properties necessary to generate the documentation for our class.  First, lets use this function to document our Jobs Collection resource.  Below is sample code that will do this for us.
 
 
 .. code-block:: php
 
-	
+
 
  	public function getDocumentation() {
         $term = tripal_get_term_details('local', 'computational_jobs');
@@ -167,7 +166,7 @@ For our services we need to provide the information to Tripal so that it can gen
         );
         $this->addDocClass($details, $operations, $properties);
         return parent::getDocumentation();
-    
+
 
 
 In the code above we add the documentation for our Job Collection class. There are three different arrays, one for the class details, one for the operations that the class supports and the third for properties. For now, the properties array is left empty. We'll come back to that later.  All classes must use a controlled vocabulary term.  Notice that the term used for this class is a term local to the database named 'computational_jobs'.   Normally when creating a class we would try to use a term from a published controlled vocabulary.  A large number of these vocabularies can be searched using `the EBI Ontology Lookup Service <https://www.ebi.ac.uk/ols/index>`_.  Unfortunately, an appropriate term could not be found in a published vocabulary, so we had to create a local term.  We can use Tripal's API functions to easily add new terms.  The following code should be placed in the install() function of your module to ensure the term is available:
@@ -219,7 +218,7 @@ in the code above need to determine if the resource is a job collection or a job
 
 .. code-block:: php
 
-	
+
 
     /**
      * Generates the job collection resource.
@@ -253,7 +252,7 @@ in the code above need to determine if the resource is a job collection or a job
         }
     }
 
-The first few lines of code above are as follows:  
+The first few lines of code above are as follows:
 
 .. code-block:: php
 
@@ -294,7 +293,7 @@ Lastly, we need to add our "members" of the collection.  These are the jobs from
 
 .. code-block:: php
 
-	
+
 
         foreach ($jobs as $job) {
             $member = new TripalWebServiceResource($service_path);
@@ -305,7 +304,7 @@ Lastly, we need to add our "members" of the collection.  These are the jobs from
             $this->resource->addMember($member);
         }
 
-Notice in the code above that each job is an instance of the class called TripalWebServiceResource.  We use this class because each element of the collection is a reference to a resource and we reference the ID and the type.   In the code above we create the new member resource, we set it's type to be the vocabulary term 'local:computational_job' and eventually, use the addMember function of our TripalWebServiceCollection to add it to the collection. 
+Notice in the code above that each job is an instance of the class called TripalWebServiceResource.  We use this class because each element of the collection is a reference to a resource and we reference the ID and the type.   In the code above we create the new member resource, we set it's type to be the vocabulary term 'local:computational_job' and eventually, use the addMember function of our TripalWebServiceCollection to add it to the collection.
 
 Also in the code above is a new function named addProperty.   We want to add some additional information about the job to help the end-user understand what each job is and how to get to it.  Here we add two properties, one that is the job name and another that is the page URL for the job on our Tripal site.  With these properties the client can quickly see the title and can go see the job on the Tripal site by following the given URL.  Note, a resource always has two identifying pieces of information: the ID and the Type.  So, everything else is added as a property of the resource.   Also notice that the first argument when using the addProperty function is a controlled vocabulary term.  Here we've used the terms **schema:name** and **schema:ItemPage**.  These terms are from the Schema.org vocabulary and the define what these properties are: a name and an item's page.
 
@@ -328,7 +327,7 @@ Simplifying the Property Keys
 
 Implementing a Resource
 ------------------------
- 
+
 Documenting Properties
 ------------------------
 
@@ -342,6 +341,6 @@ Controlling Access to Resources
 ---------------------------------
 
 
- 
+
 
 Debugging and Troubleshooting

@@ -3,7 +3,7 @@ Web Services
 
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`./install_tripal/drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../prereqs/drupal_home`
 
 Overview
 --------
@@ -43,7 +43,7 @@ Exploring Web Services
 
 Once enabled, web services are immediately available on your site at the URL  ``http://[your.site.name]/web-services/`` (replace [your.site.name] with the address and path of your Tripal site). Web services are meant to be accessed programmatically, but they can be easily explored using a web browser such as with the `Firefox browser <https://www.mozilla.org/en-US/firefox/>`_ and `JSONView <https://jsonview.com/>`_ extension enabled.  For example, the following screen shot shows an example Tripal site with the data loaded following the Setup of an Example Genomics Site instructions of this User's Guide.
 
-.. image:: web_services.1.png
+.. image:: ./web_services/web_services.1.png
 
 This initial resource "home page" of the web services returns results in `JSON format <http://www.json.org/>`_.  When using the JSONView extension within Firefox you can explore web services by clicking the links that are present in the browser.
 
@@ -103,7 +103,7 @@ The Content Service
 
 The content service provided by Tripal shares all publicly available content.  The content that appears on a page is the same content that appears in web services.  A major change in the design of Tripal from v2 to v3 is that all data is organized via controlled vocabularies.  The following diagram demonstrates how this is implemented.  For example the mRNA term comes from the `Sequence Ontology <http://www.sequenceontology.org/>`_.  It's unique term accession is SO:0000234.  Every content type in Tripal consists solely of a type (e.g. mRNA or SO:0000234), it's associated label (e.g.  mRNA) and a numeric id unique to each Tripal site.  The ID is what uniquely identifies every content in Tripal.  Each unique content with these three attributes is referred to as an **Entity**.  All other data associated with a given entity are called **Fields**.  Example fields for an mRNA content type may be the name of the mRNA, a unique name, the coding sequence, the coordinates on the reference genome, etc.  In the diagram below, these fields are the rectangular boxes that jut out of the mRNA entity.   These fields can be "attached" to an entity by Tripal and data can come from any storage backend.  The data that appears on a page and the data in the content service is taken from the same entity and therefore end-users and clients have access to the same data.
 
-.. image:: ./web_services.2.png
+.. image:: ./web_services/web_services.2.png
 
 
 Content Type Listing
@@ -111,7 +111,7 @@ Content Type Listing
 
 When the content service is accessed, the response is always a listing of all available content types on the site.   Site administrators can create new content types by following the Create Content Types section of this tutorial.  By default, Tripal is installed with several commonly used content types, but new ones can be created as needed for the site.  Whenever a new content type is created it immediately is available via the content service, and these content types can be found at the path:  ``/web-services/content/v0.1``.  Below is an example screenshot of the resulting JSON from an example site:
 
-.. image:: ./web_services.3.png
+.. image:: ./web_services/web_services.3.png
 
 Note that the **@type** for this listing is a Collection and the label is **Content Types**.  Each content type has a unique **@id**, a **@type** indicating the term that describes it and a brief description.  The **@id** serves as a URL to obtain further details about that content type.   Also, notice in the above screenshot that the **@context** section is minimized, but as usual, each of the terms used in the key/value pairs are fully qualified in that section.   This JSON-LD response also indicates the total number of content types available.
 
@@ -120,7 +120,7 @@ Content Type Members (Entities)
 
 The members or entities that belong to a content type are found at the path:  ``/web-services/content/v0.1/{name}`` where {name} is the name of the content type.  The {name} field must be identical to the label field from the content type listing shown previously.   For example, the mRNA content type  path would be   ``/web-services/content/v0.1/mRNA``.  This resource provides a listing of all members for that content type.   The following shows the response for an mRNA listing:
 
-.. image:: ./web_services.4.png
+.. image:: ./web_services/web_services.4.png
 
 Note that the **@type** is also a Collection byt the label is 'mRNA collection'.  To maintain a small response, the results of content member listings is usually paged such that only a subset of members is shown.  In this example, there are 8032 mRNA entities available, but only 25 are shown.  Notice the view term.  It contains several sub elements named first, last and next. These provide navigation links that can be used by a client application to iterate through all entities.  The structure of these links is as follows:
 
@@ -135,11 +135,11 @@ Content (Entity) Resource
 
 Each entity is accessible via the path: ``/web-services/content/v0.1/{name}/{id}``.   Here {name} continues to refer to the name of the content type (e.g. mRNA) and {id} refers to the unique numeric ID for the entity.  In this example an mRNA entity would result in a JSON-LD response like the following:
 
-.. image:: ./web_services.5.png
+.. image:: ./web_services/web_services.5.png
 
 In the JSON shown above, note that all of the key/value pairs used are referenced in the **@context** section  Also, notice that some key/value pairs contain data while others contain URLs.  Tripal is optimized to not load every attribute.  For example, sequence data for some content type may be large.  By providing a URL for the data, it keeps the response small but allows clients to access that information via the provided URL.   For example, if the URL for the **sequence_coordinate** attribute were followed the following response could be seen:
 
-.. image:: ./web_services.6.png
+.. image:: ./web_services/web_services.6.png
 
 Here the client can obtain the necessary information about the coordinates on the genome for this particular mRNA entity.
 

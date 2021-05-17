@@ -1,4 +1,4 @@
-Install Tripal
+Upgrade Tripal
 ===============
 
 
@@ -7,5 +7,5 @@ Install Tripal
    :caption: Table of Contents
    :glob:
 
-   ./install_tripal/rapid_install
-   ./install_tripal/manual_install
+   ./upgrade_tripal/updating
+   ./upgrade_tripal/upgrade_from_tripal2

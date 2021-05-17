@@ -1,11 +1,10 @@
-
 Tripal Module Rating System
-=============================
+===========================
 
 This module rating system is meant to aid Tripal Site Administrators in choosing extension modules for their site. It is also meant to guide developers in module best practices and celebrate modules which achieve these goals.
 
 Bronze
--------
+------
 
 .. image:: Tripal-Bronze.png
 
@@ -17,7 +16,7 @@ Bronze
 - Has a license (distributed with module).
 
 Silver
--------
+------
 
 .. image:: Tripal-Silver.png
 
@@ -31,7 +30,7 @@ Silver
     - e.g. first release for Drupal 7 should be: ``7.x-1.0``.
 
 Gold
------
+----
 
 .. image:: Tripal-Gold.png
 

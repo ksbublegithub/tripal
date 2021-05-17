@@ -3,9 +3,9 @@ Bulk Loader
 
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`./install_tripal/drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../prereqs/drupal_home`
 
-The bulk loader is a tool that Tripal provides for loading of data contained in tab delimited files. Tripal supports loading of files in standard formats (e.g. ``FASTA``, ``GFF``, ``OBO``), but Chado can support a variety of different biological data types and there are often no community standard file formats for loading these data. For example, there is no file format for importing genotype and phenotype data. Those data can be stored in the feature, stock and natural diversity tables of Chado. The Bulk Loader was introduced in Tripal v1.1 and provides a web interface for building custom data loader. In short, the site developer creates the bulk loader "template". This template can then be used and re-used for any tab delimited file that follows the format described by the template. Additionally, bulk loading templates can be exported allowing Tripal sites to share loaders with one another.  
+The bulk loader is a tool that Tripal provides for loading of data contained in tab delimited files. Tripal supports loading of files in standard formats (e.g. ``FASTA``, ``GFF``, ``OBO``), but Chado can support a variety of different biological data types and there are often no community standard file formats for loading these data. For example, there is no file format for importing genotype and phenotype data. Those data can be stored in the feature, stock and natural diversity tables of Chado. The Bulk Loader was introduced in Tripal v1.1 and provides a web interface for building custom data loader. In short, the site developer creates the bulk loader "template". This template can then be used and re-used for any tab delimited file that follows the format described by the template. Additionally, bulk loading templates can be exported allowing Tripal sites to share loaders with one another.
 
 The following commands can be executed to install the Tripal Bulk Loader using Drush:
 
@@ -13,7 +13,7 @@ The following commands can be executed to install the Tripal Bulk Loader using D
 
   cd /var/www/
   drush pm-enable tripal_bulk_loader
-  
+
 
 Plan How to Store Data
 ----------------------
@@ -102,11 +102,11 @@ Creating a New Bulk Loader Template
 
 Now that we know where all of the data in the input file will go and we have the necessary dependencies in the database (i.e. the NCBI Taxonomy database), we can create a new bulk loader template. Navigate to ``Tripal → Data Loaders → Chado Bulk Loader``, click the **Templates** tab in the top right corner, and finally click the link **Add Template**. The following page appears:
 
-.. image:: ./bulk_loader.1.png
+.. image:: ./bulk_loader/bulk_loader.1.png
 
 We need to first provide a name for our template. Try to name templates in a way that are meaningful for others. Currently only site administrators can load files using the bulk loader. But, future versions of Tripal will provide functionality to allow other privileged users the ability to use the bulk loader templates. Thus, it is important to name the templates so that others can easily identify the purpose of the template. For this example, enter the name **NCBI Taxonomy Importer (taxid, genus, species)**. The following page appears:
 
-.. image:: ./bulk_loader.2.png
+.. image:: ./bulk_loader/bulk_loader.2.png
 
 Notice that the page is divided into two sections: **Current Records** and **Current Fields**. Before we continue with the template we need a bit of explanation as to the terminology used by the bulk loader. A **record** refers to a Chado table and an action on that table. For example, to insert the data from the input file we will need to select the NCBI Taxonomy database from the **db** table and insert entries into the **dbxref**, **organism** and **dbxref_organism** tables. Therefore, we will have four records:
 
@@ -119,7 +119,7 @@ Each record contains a set of fields on which the action is performed. Thus, whe
 
 To create the first record for inserting an organism, click the button **New Record/Field**. The following page appears:
 
-.. image:: ./bulk_loader.3.png
+.. image:: ./bulk_loader/bulk_loader.3.png
 
 By default, when adding a new record, the bulk loader also provides the form elements for adding the first field of the record as well. We are adding a new record, so we can leave the **Record** drop-down as **New Record**. Next, give this record a unique record name. Because we are inserting into the organism table, enter the name **Organism** into the **Unique Record Name** box.
 
@@ -127,7 +127,7 @@ We also have the opportunity with this form to add our first field to the record
 
 In the next section, titled **Data File Column**, we need to indicate the column in the tab-delimited file where the genus is found. For the example file this is column 2 (columns are ordered beginning with number 1). Therefore, enter the number **2** in the **Column** box. There are additional options to expose the field to the user, but for now we can ignore those options. Click the **Save Changes** button at the bottom. We now see that the organism record and the first field have been added to our bulk loader template.
 
-.. image:: ./bulk_loader.4.png
+.. image:: ./bulk_loader/bulk_loader.4.png
 
 We also see that the **Mode** (or action) for this record has been set to insert by default. Before continuing we should edit the settings for the record so that it is more fault tolerant. Click the **Edit** link to the left of the new organism record. On the resulting page we see the record details we already provided, but now there is a section titled **Action to take when Loading Record**. By default, the **INSERT** option is selected. This is correct. We want to perform an insert. However, notice in the **Additional Insert Options** section, the **SELECT if duplicate (no insert).** Check this box. This is a good option to add because it prevents the bulk loader from failing if the record already exists in the table.
 
@@ -143,7 +143,7 @@ Next, we need to add the **species** field to the record. Click the **Add Field*
 
 We now have two fields for our organism record:
 
-.. image:: ./bulk_loader.5.png
+.. image:: ./bulk_loader/bulk_loader.5.png
 
 At this point our organism record is complete, however there are still a few fields in the organism table of Chado that are not present in our record. These include the **organism_id, abbreviation, common_name** and **comment** fields. We do not have values in our input file for any of these fields. Fortunately, the **organism_id** field is a primary key field and is auto generated when a record is submitted. We do not need to provide a value for that field. The other fields are not part of the unique constraint of the table. Therefore, those fields are optional and we do not need to specify them. Ideally, if we did have values for those non-required fields we would add them as well.
 
@@ -184,7 +184,7 @@ Now that we have a record that selects the **db_id** we can now create the **dbx
 
 Click the Save Changes button. The Edit Template page appears.
 
-.. image:: ./bulk_loader.6.png
+.. image:: ./bulk_loader/bulk_loader.6.png
 
 Again, we need to edit the record to make the loader more fault tolerant. Click the Edit link to the left of the Taxonomy ID record. Select the following:
 
@@ -233,7 +233,7 @@ Create the second field:
 
 We are now done! We have created a bulk loader template that reads in a file with three columns containing an NCBI taxonomy ID, a genus and species. The loader places the genus and species in the **organism** table, adds the NCBI Taxonomy ID to the **dbxref** table,  links it to the NCBI Taxonomy entry in the db table, and then adds an entry to the **organism_dbxref** table that links the organism to the NCBI taxonomy Id. The following screen shots show how the template should appear:
 
-.. image:: ./bulk_loader.7.png
+.. image:: ./bulk_loader/bulk_loader.7.png
 
 To save the template, click the **Save Template** link at the bottom of the page.
 
@@ -242,7 +242,7 @@ Creating a Bulk Loader Job (importing a file)
 
 Now that we have created a bulk loader template we can use it to import a file. We will import the **Fragaria**.txt file downloaded previously. To import a file using a bulk loader template, click the **Add Content** link in the administrative menu and click the **Bulk Loading Job**. A bulk loading job is required each time we want to load a file. Below is a screen shot of the page used for creating a bulk loading job.
 
-.. image:: ./bulk_loader.8.png
+.. image:: ./bulk_loader/bulk_loader.8.png
 
 Provide the following values:
 
@@ -258,11 +258,11 @@ Provide the following values:
 
 Click **Save**. The page then appears as follows:
 
-.. image:: ./bulk_loader.9.png
+.. image:: ./bulk_loader/bulk_loader.9.png
 
 You can see details about constants that are used by the template and the where the fields from the input file will be stored by clicking the **Data Fields** tab in the table of contents on the left sidebar.
 
-.. image:: ./bulk_loader.10.png
+.. image:: ./bulk_loader/bulk_loader.10.png
 
 Now that we have created a job, we can submit it for execution by clicking the **Submit Job** button. This adds a job to the Tripal Jobs systems and we can launc the job as we have previously in this tutorial:
 
@@ -300,7 +300,7 @@ After execution of the job you should see similar output to the terminal window:
 
 Our *Fragaira* species should now be loaded, and we return to the Tripal site to see them. Click on the **Organisms** link in the **Search Data** menu.  In the search form that appears, type "Fragaria" in the **Genus** text box and click the **Filter** button. We should see the list of newly added *Fragaria* species.
 
-.. image:: ./bulk_loader.11.png
+.. image:: ./bulk_loader/bulk_loader.11.png
 
 Before the organisms will have Tripal pages, the Chado records need to be **Published**.  You can publish them by navigating to **Tripal Content -> Publish Tripal Content**.  Select the **organism** table from the dropdown and run the job.
 
@@ -310,7 +310,7 @@ Before the organisms will have Tripal pages, the Chado records need to be **Publ
 
 Once complete, return to the search form, find a *Fragaria* species that has been published and view its page. You should see a Cross References link in the left table of contents. If you click that link you should see the NCBI Taxonomy ID with a link to the page:
 
-.. image:: ./bulk_loader.12.png
+.. image:: ./bulk_loader/bulk_loader.12.png
 
 
 Sharing Your Templates with Others
@@ -318,7 +318,7 @@ Sharing Your Templates with Others
 
 Now that our template for loading organisms with NCBI Taxonomy IDs is completed we can share our template loader with anyone else that has a Tripal-based site.  To do this we simply export the template in text format, place it in a text file or directly in an email and send to a collaborator for import into their site.  To do this, navigate to **Tripal → Chado Data Loaders → Buik Loader** and click the **Tempalate** tab at the top.  Here we find a table of all the templates we have created.  We should see our template named **NCBI Taxonomy Importer** (taxid, genus, species).  In the far right colum is a link to export that template.  Licking that link will redirect you to a page where the template is provided in a serialized PHP array.
 
-.. image:: ./bulk_loader.13.png
+.. image:: ./bulk_loader/bulk_loader.13.png
 
 Cut-and-paste all of the text in the **Export** field and send it to a collaborator.
 

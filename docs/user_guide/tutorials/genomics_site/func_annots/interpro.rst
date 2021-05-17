@@ -3,7 +3,7 @@ Adding InterProScan Results
 
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../install_tripal/drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../../prereqs/drupal_home`
 
 For this tutorial, these results were obtained by using a local installation of InterProScan installed on a computational cluster. However, you may choose to use Blast2GO or the online InterProScan utility. Results should be saved in ``XML`` format.
 

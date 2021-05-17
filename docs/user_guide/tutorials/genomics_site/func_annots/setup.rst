@@ -2,7 +2,7 @@ Module Setup
 ============
 .. note::
 
-  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../install_tripal/drupal_home`
+  Remember you must set the ``$DRUPAL_HOME`` environment variable if you want to cut-and-paste the commands below. See :doc:`../../../prereqs/drupal_home`
 
 
 For this example we will be load functional data for our gene. To do this we will use the Blast, KEGG, and InterPro extension modules. However, these extension modules are not part of the "core" Tripal package but are available as separate extensions.  Anyone may create extensions for Tripal.  These extensions are useful for genomic data and therefore are included in this tutorial.
@@ -41,7 +41,7 @@ Each of these modules provides new fields for both the **gene** and **mRNA** con
 
 .. image:: setup1.png
 
-Next, we need to position the new field. Using the skills you learned in the :doc:`../../content_types/configuring_page_display` Create two new **Tripal Panes** named:
+Next, we need to position the new field. Using the skills you learned in the :doc:`../../../building/content_types/configuring_page_display` Create two new **Tripal Panes** named:
 
 - Blast Results
 - Protein Domains
